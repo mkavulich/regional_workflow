@@ -3,7 +3,7 @@ set -eux
 
 . ../ush/source_util_funcs.sh
 
-source ./machine-setup.sh > /dev/null 2>&1
+source ./machine-setup.sh
 cwd=`pwd`
 
 USE_PREINST_LIBS=${USE_PREINST_LIBS:-"true"}
@@ -21,6 +21,8 @@ fi
 if [ $target = hera ]; then target=hera.intel ; fi
 
 if [ $target = jet ]; then target=jet.intel ; fi
+
+if [ $target = cheyenne ]; then target=cheyenne.intel ; fi
 
 #------------------------------------
 # Get from the manage_externals configuration file the relative directo-

@@ -37,8 +37,8 @@ if [ "$platform" = "no_platform_specified" ]; then
         # We are on NOAA Tide or Gyre
         platform=wcoss
     elif [[ -d /glade ]] ; then
-        # We are on NCAR Yellowstone
-        platform=yellowstone
+        # We are on NCAR Cheyenne
+        platform=cheyenne
     elif [[ -d /lustre && -d /ncrc ]] ; then
         # We are on GAEA. 
         platform=gaea
