@@ -129,13 +129,9 @@ elif [ "$target" = "wcoss" ] ; then
         source /usrx/local/Modules/default/init/$__ms_shell
     fi
     module purge
-elif [ "$target" = "yellowstone" ] ; then
-    # We are on NCAR Yellowstone
-    if ( ! eval module help > /dev/null 2>&1 ) ; then
-	echo load the module command 1>&2
-        . /usr/share/Modules/init/$__ms_shell
-    fi
-    module purge
+ elif [ "$target" = "cheyenne" ] ; then
+    # We are on NCAR Cheyenne
+    echo "Not doing anything for 'cheyenne', if statement reserved for future use"
 elif [ "$target" = "gaea" ] ; then
     # We are on GAEA. 
     if ( ! eval module help > /dev/null 2>&1 ) ; then
