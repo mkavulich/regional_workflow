@@ -16,7 +16,7 @@ if [ ! -d "../exec" ]; then
   mkdir ../exec
 fi
 
-cd EMC_post
+cd ${cwd}/EMC_post
 
 if [ "$target" = "jet" ] ; then
   ./compile jet
@@ -34,10 +34,10 @@ elif [ "$target" = "cheyenne" ] ; then
   moduledir=$(readlink -f ../../modulefiles/)
   module use $moduledir
   module load cheyenne.default
-  ./configure << EOT
-4
-EOT
-  ./compile
+  mkdir -p build
+  cd build
+  cmake .. -DCMAKE_PREFIX_PATH=/glade/p/ral/jntp/UFS_CAM/NCEPLIBS-intel-19.0.5/mpt-2.19 -DCMAKE_MODULE_PATH=${cwd}/EMC_post/cmake/Modules/ -DCMAKE_INSTALL_PREFIX=${cwd}/EMC_post
+  make install
 elif [ "$target" = "gaea" ] ; then
     echo "Not doing anything for 'gaea', if statement reserved for future use"
 elif [ "$target" = "odin" ] ; then

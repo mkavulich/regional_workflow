@@ -25,7 +25,7 @@ fi
 #------------------------------------
 # install post
 #------------------------------------
- ${CP} EMC_post/exec/*                         ../exec/ncep_post
+ ${CP} EMC_post/*/ncep_post                         ../exec/ncep_post
 
 #------------------------------------
 # install chgres
