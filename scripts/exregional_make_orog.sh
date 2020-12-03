@@ -152,6 +152,10 @@ case $MACHINE in
     export APRUN="time"
     ;;
 
+  "LINUX")
+    APRUN="time"
+    ;;
+
   *)
     print_err_msg_exit "\
 Run command has not been specified for this machine:
@@ -327,7 +331,7 @@ with nonzero exit code:
   exec_fp = \"${exec_fp}\""
     ;;
 
-  "CHEYENNE" | "HERA" | "ORION" | "JET" | "ODIN" | "STAMPEDE")
+  *)
     $APRUN "${exec_fp}" < "${input_redirect_fn}" || \
       print_err_msg_exit "\
 Call to executable (exec_fp) that generates the raw orography file returned
