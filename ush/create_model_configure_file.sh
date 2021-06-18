@@ -100,8 +100,8 @@ run directory (run_dir):
 #
 # Set parameters in the model configure file.
 #
-  dot_quilting_dot="."${QUILTING,,}"."
-  dot_print_esmf_dot="."${PRINT_ESMF,,}"."
+  dot_quilting_dot="."$(echo_lowercase $QUILTING)"."
+  dot_print_esmf_dot="."$(echo_lowercase $PRINT_ESMF)"."
 #
 #-----------------------------------------------------------------------
 #
