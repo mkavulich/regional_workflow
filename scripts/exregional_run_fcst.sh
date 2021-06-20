@@ -196,7 +196,7 @@ the grid and (filtered) orography files ..."
 cd_vrfy ${run_dir}/INPUT
 
 relative_or_null=""
-if [ "${RUN_TASK_MAKE_GRID}" = "TRUE" ] && [ "${MACHINE}" != "WCOSS_CRAY" ]; then
+if [ "${MACHINE}" = "MACOS" ] || [ "${MACHINE}" != "WCOSS_CRAY" ]; then
   relative_or_null="--relative"
 fi
 
@@ -259,11 +259,6 @@ Cannot create symlink because target does not exist:
 fi
 
 
-
-relative_or_null=""
-if [ "${RUN_TASK_MAKE_OROG}" = "TRUE" ] && [ "${MACHINE}" != "WCOSS_CRAY" ] ; then
-  relative_or_null="--relative"
-fi
 
 # Symlink to halo-0 orography file with "${CRES}_" and "halo0" stripped from name.
 target="${FIXLAM}/${CRES}${DOT_OR_USCORE}oro_data.tile${TILE_RGNL}.halo${NH0}.nc"
@@ -353,12 +348,10 @@ cd_vrfy ${run_dir}/INPUT
 #ln_vrfy -sf gfs_data.tile${TILE_RGNL}.halo${NH0}.nc gfs_data.nc
 #ln_vrfy -sf sfc_data.tile${TILE_RGNL}.halo${NH0}.nc sfc_data.nc
 
-relative_or_null=""
-
 target="gfs_data.tile${TILE_RGNL}.halo${NH0}.nc"
 symlink="gfs_data.nc"
 if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
+  ln_vrfy -sf $target $symlink
 else
   print_err_msg_exit "\
 Cannot create symlink because target does not exist:
@@ -368,7 +361,7 @@ fi
 target="sfc_data.tile${TILE_RGNL}.halo${NH0}.nc"
 symlink="sfc_data.nc"
 if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
+  ln_vrfy -sf $target $symlink
 else
   print_err_msg_exit "\
 Cannot create symlink because target does not exist:
@@ -394,7 +387,7 @@ static) files in the FIXam directory:
   run_dir = \"${run_dir}\""
 
 relative_or_null=""
-if [ "${RUN_ENVIR}" != "nco" ] && [ "${MACHINE}" != "WCOSS_CRAY" ] ; then
+if [ "${MACHINE}" = "MACOS" ] || [ "${MACHINE}" != "WCOSS_CRAY" ] ; then
   relative_or_null="--relative"
 fi
 
@@ -444,7 +437,7 @@ Creating links in the current run directory to cycle-independent model
 input files in the main experiment directory..."
 
 relative_or_null=""
-if [ "${RUN_ENVIR}" != "nco" ] && [ "${MACHINE}" != "WCOSS_CRAY" ] ; then
+if [ "${MACHINE}" = "MACOS" ] || [ "${MACHINE}" != "WCOSS_CRAY" ] ; then
   relative_or_null="--relative"
 fi
 
@@ -492,7 +485,7 @@ cycle's (cdate) run directory (run_dir) failed:
 #-----------------------------------------------------------------------
 #
 if [ "${DO_ENSEMBLE}" = "TRUE" ]; then
-  if [ "${MACHINE}" = "WCOSS_CRAY" ]; then
+  if [ "${MACHINE}" = "MACOS" ] || [ "${MACHINE}" = "WCOSS_CRAY" ]; then
     relative_or_null=""
   else
     relative_or_null="--relative"

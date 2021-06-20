@@ -340,7 +340,7 @@ if [ "${CCPP_PHYS_SUITE}" = "FV3_HRRR" ]; then
   grid_fp="${FIXLAM}/${grid_fn}"
   ls_fn="geo_em.d01.lat-lon.2.5m.HGT_M.nc"
   ss_fn="HGT.Beljaars_filtered.lat-lon.30s_res.nc"
-  if [ "${MACHINE}" = "WCOSS_CRAY" ]; then
+  if [ "${MACHINE}" = "WCOSS_CRAY" ] || [ "${MACHINE}" = "MACOS" ]; then
     relative_or_null=""
   else
     relative_or_null="--relative"
@@ -488,7 +488,7 @@ cp_vrfy "${raw_orog_fp}" "${filtered_orog_fp}"
 # point it to the actual grid file specified by grid_fp.
 #
 
-if [ "${MACHINE}" = "WCOSS_CRAY" ]; then
+if [ "${MACHINE}" = "WCOSS_CRAY" ] || [ "${MACHINE}" = "MACOS" ]; then
   ln_vrfy -fs "${grid_fp}" "${filter_dir}/${grid_fn}"
 else
   ln_vrfy -fs --relative "${grid_fp}" "${filter_dir}/${grid_fn}"
