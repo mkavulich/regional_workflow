@@ -864,11 +864,7 @@ of rocoto loaded.  For example, to load version 1.3.1 of rocoto, use
 
 (This version has been tested on hera; later versions may also work but
 have not been tested.)
-"
-  ;;
 
-esac
-print_info_msg "
 To launch the workflow, change location to the experiment directory
 (EXPTDIR) and issue the rocotrun command, as follows:
 
