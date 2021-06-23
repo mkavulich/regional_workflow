@@ -209,6 +209,22 @@ fi
 #
 #-----------------------------------------------------------------------
 #
+# Declare local function to avoid repetition
+#
+#-----------------------------------------------------------------------
+#
+function quit_unless_user_spec_data() {
+  if [ "${USE_USER_STAGED_EXTRN_FILES}" != "TRUE" ]; then
+    print_err_msg_exit "\
+The system directory in which to look for external model output files
+has not been specified for this external model and machine combination:
+  extrn_mdl_name = \"${extrn_mdl_name}\"
+  MACHINE = \"$MACHINE\""
+  fi
+}
+#
+#-----------------------------------------------------------------------
+#
 # Check input variables for valid values.
 #
 #-----------------------------------------------------------------------
@@ -453,12 +469,14 @@ workflow to look for the external model files in a user-staged directory."
       ;;
 
     *)
-      print_err_msg_exit "\
+      if [ "${USE_USER_STAGED_EXTRN_FILES}" != "TRUE" ]; then
+        print_err_msg_exit "\
 The external model file names (either on disk or in archive files) have 
 not yet been specified for this combination of external model (extrn_mdl_name) 
 and analysis or forecast (anl_or_fcst):
   extrn_mdl_name = \"${extrn_mdl_name}\"
   anl_or_fcst = \"${anl_or_fcst}\""
+      fi
       ;;
 
     esac
@@ -600,12 +618,14 @@ workflow to look for the external model files in a user-staged directory."
       ;;
 
     *)
-      print_err_msg_exit "\
+      if [ "${USE_USER_STAGED_EXTRN_FILES}" != "TRUE" ]; then
+        print_err_msg_exit "\
 The external model file names have not yet been specified for this com-
 bination of external model (extrn_mdl_name) and analysis or forecast
 (anl_or_fcst):
   extrn_mdl_name = \"${extrn_mdl_name}\"
   anl_or_fcst = \"${anl_or_fcst}\""
+      fi
       ;;
 
     esac
@@ -662,11 +682,7 @@ bination of external model (extrn_mdl_name) and analysis or forecast
       sysdir="$sysbasedir"
       ;;
     *)
-      print_err_msg_exit "\
-The system directory in which to look for external model output files 
-has not been specified for this external model and machine combination:
-  extrn_mdl_name = \"${extrn_mdl_name}\"
-  MACHINE = \"$MACHINE\""
+      quit_unless_user_spec_data
       ;;
     esac
     ;;
@@ -699,11 +715,7 @@ has not been specified for this external model and machine combination:
       sysdir="$sysbasedir"
       ;;
     *)
-      print_err_msg_exit "\
-The system directory in which to look for external model output files 
-has not been specified for this external model and machine combination:
-  extrn_mdl_name = \"${extrn_mdl_name}\"
-  MACHINE = \"$MACHINE\""
+      quit_unless_user_spec_data
       ;;
     esac
     ;;
@@ -733,11 +745,7 @@ has not been specified for this external model and machine combination:
       sysdir="$sysbasedir"
       ;;
     *)
-      print_err_msg_exit "\
-The system directory in which to look for external model output files 
-has not been specified for this external model and machine combination:
-  extrn_mdl_name = \"${extrn_mdl_name}\"
-  MACHINE = \"$MACHINE\""
+      quit_unless_user_spec_data
       ;;
     esac
     ;;
@@ -767,11 +775,7 @@ has not been specified for this external model and machine combination:
       sysdir="$sysbasedir"
       ;;
     *)
-      print_err_msg_exit "\
-The system directory in which to look for external model output files 
-has not been specified for this external model and machine combination:
-  extrn_mdl_name = \"${extrn_mdl_name}\"
-  MACHINE = \"$MACHINE\""
+      quit_unless_user_spec_data
       ;;
     esac
     ;;
@@ -800,22 +804,14 @@ has not been specified for this external model and machine combination:
       sysdir="$sysbasedir"
       ;;
     *)
-      print_err_msg_exit "\
-The system directory in which to look for external model output files
-has not been specified for this external model and machine combination:
-  extrn_mdl_name = \"${extrn_mdl_name}\"
-  MACHINE = \"$MACHINE\""
+      quit_unless_user_spec_data
       ;;
     esac
     ;;
 
 
   *)
-    print_err_msg_exit "\
-The system directory in which to look for external model output files 
-has not been specified for this external model:
-  extrn_mdl_name = \"${extrn_mdl_name}\""
-
+    quit_unless_user_spec_data
   esac
 #
 #-----------------------------------------------------------------------
