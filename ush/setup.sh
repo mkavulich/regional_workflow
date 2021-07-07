@@ -662,6 +662,42 @@ check_var_valid_value \
 #
 #-----------------------------------------------------------------------
 #
+# Make sure that FCST_MODEL is set to a valid value.
+#
+#-----------------------------------------------------------------------
+#
+check_var_valid_value "FCST_MODEL" "valid_vals_FCST_MODEL"
+#
+#-----------------------------------------------------------------------
+#
+# Set CPL to TRUE/FALSE based on FCST_MODEL.
+#
+#-----------------------------------------------------------------------
+#
+if [ "${FCST_MODEL}" = "ufs-weather-model" ]; then
+  CPL="FALSE"
+elif [ "${FCST_MODEL}" = "fv3gfs_aqm" ]; then
+  CPL="TRUE"
+else
+  print_err_msg_exit "\ 
+The coupling flag CPL has not been specified for this value of FCST_MODEL:
+  FCST_MODEL = \"${FCST_MODEL}\""
+fi
+#
+#-----------------------------------------------------------------------
+#
+# Make sure RESTART_INTERVAL is set to an integer value if present
+#
+#-----------------------------------------------------------------------
+#
+if ! [[ "${RESTART_INTERVAL}" =~ ^[0-9]+$ ]]; then
+  print_err_msg_exit "\
+RESTART_INTERVAL must be set to an integer number of hours.
+  RESTART_INTERVAL = \"${RESTART_INTERVAL}\""
+fi
+#
+#-----------------------------------------------------------------------
+#
 # Check that DATE_FIRST_CYCL and DATE_LAST_CYCL are strings consisting 
 # of exactly 8 digits.
 #
@@ -2115,6 +2151,30 @@ fi
 #
 #-----------------------------------------------------------------------
 #
+# Make sure that WRITE_DOPOST is set to a valid value.
+#
+#-----------------------------------------------------------------------
+#
+check_var_valid_value "WRITE_DOPOST" "valid_vals_WRITE_DOPOST"
+#
+# Set WRITE_DOPOST to either "TRUE" or "FALSE" so we don't have to consider
+# other valid values later on.
+#
+WRITE_DOPOST=${WRITE_DOPOST^^}
+if [ "$WRITE_DOPOST" = "TRUE" ] || \
+   [ "$WRITE_DOPOST" = "YES" ]; then
+  WRITE_DOPOST="TRUE"
+
+# Turn off run_post
+  RUN_TASK_RUN_POST="FALSE"
+
+elif [ "$WRITE_DOPOST" = "FALSE" ] || \
+     [ "$WRITE_DOPOST" = "NO" ]; then
+  WRITE_DOPOST="FALSE"
+fi
+#
+#-----------------------------------------------------------------------
+#
 # Make sure that QUILTING is set to a valid value.
 #
 #-----------------------------------------------------------------------
@@ -2384,12 +2444,6 @@ str_to_insert=${str_to_insert//$'\n'/\\n}
 #
 regexp="(^#!.*)"
 $SED -i -r -e "s|$regexp|\1\n\n${str_to_insert}\n|g" ${GLOBAL_VAR_DEFNS_FP}
-
-
-
-
-
-
 #
 # Loop through the lines in line_list.
 #
@@ -2750,6 +2804,14 @@ fi
 #-----------------------------------------------------------------------
 #
 { cat << EOM >> ${GLOBAL_VAR_DEFNS_FP}
+#
+#-----------------------------------------------------------------------
+#
+# CPL: parameter for coupling in model_configure
+#
+#-----------------------------------------------------------------------
+#
+CPL="${CPL}"
 #
 #-----------------------------------------------------------------------
 #

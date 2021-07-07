@@ -419,6 +419,36 @@ FCST_LEN_HRS="24"
 #
 #-----------------------------------------------------------------------
 #
+# Set model_configure parameters.  Definitions:
+#
+# DT_ATMOS:
+# The main forecast model integraton time step.  As described in the 
+# forecast model documentation, "It corresponds to the frequency with 
+# which the top level routine in the dynamics is called as well as the 
+# frequency with which the physics is called."
+#
+# CPL: parameter for coupling
+# (set automatically based on FCST_MODEL in ush/setup.sh)
+# (ufs-weather-model:FALSE, fv3gfs_aqm:TRUE)
+#
+# RESTART_INTERVAL:
+# frequency of the output restart files (unit:hour). 
+# Default=0: restart files are produced at the end of a forecast run
+# For example, RESTART_INTERVAL="1": restart files are produced every hour
+# with the prefix "YYYYMMDD.HHmmSS." in the RESTART directory
+#
+# WRITE_DOPOST:
+# Flag that determines whether or not to use the INLINE POST option
+# When TRUE, force to turn off run_post (RUN_TASK_RUN_POST=FALSE) in setup.sh
+#
+#-----------------------------------------------------------------------
+#
+DT_ATMOS=""
+RESTART_INTERVAL="0"
+WRITE_DOPOST="FALSE"
+#
+#-----------------------------------------------------------------------
+#
 # Set METplus parameters.  Definitions:
 #
 # MODEL: 
@@ -957,12 +987,6 @@ ESGgrid_WIDE_HALO_WIDTH=""
 #
 # Set computational parameters for the forecast.  Definitions:
 #
-# DT_ATMOS:
-# The main forecast model integraton time step.  As described in the 
-# forecast model documentation, "It corresponds to the frequency with 
-# which the top level routine in the dynamics is called as well as the 
-# frequency with which the physics is called."
-#
 # LAYOUT_X, LAYOUT_Y:
 # The number of MPI tasks (processes) to use in the two horizontal 
 # directions (x and y) of the regional grid when running the forecast 
@@ -991,7 +1015,6 @@ ESGgrid_WIDE_HALO_WIDTH=""
 #
 #-----------------------------------------------------------------------
 #
-DT_ATMOS=""
 LAYOUT_X=""
 LAYOUT_Y=""
 BLOCKSIZE=""
